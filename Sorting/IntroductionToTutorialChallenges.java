@@ -13,22 +13,21 @@ import static java.util.stream.Collectors.toList;
 class Result {
 
     /*
-     * Complete the 'camelcase' function below.
+     * Complete the 'introTutorial' function below.
      *
      * The function is expected to return an INTEGER.
-     * The function accepts STRING s as parameter.
+     * The function accepts following parameters:
+     *  1. INTEGER V
+     *  2. INTEGER_ARRAY arr
      */
 
-    public static int camelcase(String s) {
-        int numberOfWords = 1;
-        boolean temp;
-        for(int i=1;i<s.length();i++){
-            temp = Character.isUpperCase(s.charAt(i));
-            if(temp){
-                numberOfWords++;
+    public static int introTutorial(int V, List<Integer> arr) {
+        for(Integer number : arr){
+            if(V == number){
+                return arr.indexOf(V);
             }
         }
-        return numberOfWords; 
+        return -1;
     }
 
 }
@@ -38,9 +37,15 @@ public class Solution {
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(System.getenv("OUTPUT_PATH")));
 
-        String s = bufferedReader.readLine();
+        int V = Integer.parseInt(bufferedReader.readLine().trim());
 
-        int result = Result.camelcase(s);
+        int n = Integer.parseInt(bufferedReader.readLine().trim());
+
+        List<Integer> arr = Stream.of(bufferedReader.readLine().replaceAll("\\s+$", "").split(" "))
+            .map(Integer::parseInt)
+            .collect(toList());
+
+        int result = Result.introTutorial(V, arr);
 
         bufferedWriter.write(String.valueOf(result));
         bufferedWriter.newLine();

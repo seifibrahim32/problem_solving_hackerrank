@@ -13,24 +13,27 @@ import static java.util.stream.Collectors.toList;
 class Result {
 
     /*
-     * Complete the 'camelcase' function below.
+     * Complete the 'runningTime' function below.
      *
      * The function is expected to return an INTEGER.
-     * The function accepts STRING s as parameter.
+     * The function accepts INTEGER_ARRAY arr as parameter.
      */
+    public static int runningTime(List<Integer> list) {
+        int shifts = 0;
+        for (int i = 1; i < list.size(); i++) {
+            Integer value = list.get(i);
+            int j = i - 1;
 
-    public static int camelcase(String s) {
-        int numberOfWords = 1;
-        boolean temp;
-        for(int i=1;i<s.length();i++){
-            temp = Character.isUpperCase(s.charAt(i));
-            if(temp){
-                numberOfWords++;
+            while (j >= 0 && list.get(j).compareTo(value) > 0) {
+                list.set(j + 1, list.get(j));
+                j--;
             }
-        }
-        return numberOfWords; 
-    }
 
+            list.set(j + 1, value);
+            shifts += i - (j + 1);
+        }
+        return shifts;
+    }
 }
 
 public class Solution {
@@ -38,9 +41,13 @@ public class Solution {
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(System.getenv("OUTPUT_PATH")));
 
-        String s = bufferedReader.readLine();
+        int n = Integer.parseInt(bufferedReader.readLine().trim());
 
-        int result = Result.camelcase(s);
+        List<Integer> arr = Stream.of(bufferedReader.readLine().replaceAll("\\s+$", "").split(" "))
+            .map(Integer::parseInt)
+            .collect(toList());
+
+        int result = Result.runningTime(arr);
 
         bufferedWriter.write(String.valueOf(result));
         bufferedWriter.newLine();

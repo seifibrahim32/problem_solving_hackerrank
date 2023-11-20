@@ -13,22 +13,36 @@ import static java.util.stream.Collectors.toList;
 class Result {
 
     /*
-     * Complete the 'camelcase' function below.
+     * Complete the 'marsExploration' function below.
      *
      * The function is expected to return an INTEGER.
      * The function accepts STRING s as parameter.
      */
 
-    public static int camelcase(String s) {
-        int numberOfWords = 1;
-        boolean temp;
-        for(int i=1;i<s.length();i++){
-            temp = Character.isUpperCase(s.charAt(i));
-            if(temp){
-                numberOfWords++;
+    public static int marsExploration(String s) {
+        int count = 0;
+        int currentPos = 0;
+        
+        
+        // SOSSPSS QSS O  R
+        // 0123456 789 10 11
+        
+        // S O S S O S S O S
+        // 0 1 2 3 4 5 6 7 8
+        for(char letter : s.toCharArray())
+        {
+            1 4 7 10
+            if(currentPos % 3 == 1)
+            {
+                count += (letter != 'O') ? 1 : 0;
             }
+            else
+            {
+                count += (letter != 'S') ? 1 : 0;
+            }
+            currentPos++;
         }
-        return numberOfWords; 
+        return count;
     }
 
 }
@@ -40,7 +54,7 @@ public class Solution {
 
         String s = bufferedReader.readLine();
 
-        int result = Result.camelcase(s);
+        int result = Result.marsExploration(s);
 
         bufferedWriter.write(String.valueOf(result));
         bufferedWriter.newLine();

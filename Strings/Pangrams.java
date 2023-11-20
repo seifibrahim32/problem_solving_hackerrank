@@ -13,22 +13,31 @@ import static java.util.stream.Collectors.toList;
 class Result {
 
     /*
-     * Complete the 'camelcase' function below.
+     * Complete the 'pangrams' function below.
      *
-     * The function is expected to return an INTEGER.
+     * The function is expected to return a STRING.
      * The function accepts STRING s as parameter.
      */
 
-    public static int camelcase(String s) {
-        int numberOfWords = 1;
-        boolean temp;
-        for(int i=1;i<s.length();i++){
-            temp = Character.isUpperCase(s.charAt(i));
-            if(temp){
-                numberOfWords++;
-            }
-        }
-        return numberOfWords; 
+    public static String pangrams(String s) {
+         s = s.toLowerCase();
+         boolean[] characters = new boolean[26];
+         Arrays.fill(characters,false); 
+         boolean isPangram = true;
+         
+         for(int i = 0 ; i < s.length(); i++){
+             if(!Character.isLetter(s.charAt(i))) continue;
+             characters[s.charAt(i)-'a'] = true;
+         }
+         
+         for(int i = 0 ; i < characters.length; i++){ 
+             if(characters[i] == false){
+                 isPangram = false;
+                 break;
+             } 
+         }
+         
+         return isPangram? "pangram":"not pangram";
     }
 
 }
@@ -40,9 +49,9 @@ public class Solution {
 
         String s = bufferedReader.readLine();
 
-        int result = Result.camelcase(s);
+        String result = Result.pangrams(s);
 
-        bufferedWriter.write(String.valueOf(result));
+        bufferedWriter.write(result);
         bufferedWriter.newLine();
 
         bufferedReader.close();
